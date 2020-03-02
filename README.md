@@ -1,2 +1,3 @@
 # Barbarians_ThesisWork
-This is my thesis work for SoftUni.
+
+A browser game made with ASP.NET Core for my thesis work for SoftUni.
