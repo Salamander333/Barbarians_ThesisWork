@@ -30,16 +30,24 @@ namespace Barbarians.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (_manager.IsSignedIn(this.User))
+            if (ModelState.IsValid)
             {
-                return this.Redirect("/");
+                var result = await _manager.PasswordSignInAsync(model.Username,
+                   model.Password, false, false);
+
+                if (result.Succeeded)
+                {
+                    return this.Redirect("/");
+                }
             }
 
-            return null;
+            ModelState.AddModelError("", "Invalid login attempt");
+            return this.View(model);
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             if (_manager.IsSignedIn(this.User))
@@ -83,6 +91,13 @@ namespace Barbarians.Controllers
             }
 
             return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _manager.SignOutAsync();
+            return Redirect("/");
         }
     }
 }
