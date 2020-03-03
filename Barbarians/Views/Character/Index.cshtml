@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Character";
+}
+@model Barbarians.ViewModels.Character.CharacterViewModel;
+
+<h1>@Model.Username</h1>
+
+@foreach (var material in Model.Materials)
+{
+    <h2>@material.Name : @material.Count</h2>
+}
+

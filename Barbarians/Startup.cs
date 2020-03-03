@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Barbarians.Models;
+using Barbarians.Services;
 
 namespace Barbarians
 {
@@ -43,13 +44,14 @@ namespace Barbarians
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 
-                options.LoginPath = "/Identity/Account/Login";
+                options.LoginPath = "/Users/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

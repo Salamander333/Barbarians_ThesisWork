@@ -14,17 +14,17 @@ namespace Barbarians.Data
         {
         }
 
-        public DbSet<Armor> Armors { get; }
+        public DbSet<Armor> Armors { get; set; }
 
-        public DbSet<Weapon> Weapons { get; }
+        public DbSet<Weapon> Weapons { get; set; }
 
-        public DbSet<Material> Materials { get; }
+        public DbSet<Material> Materials { get; set; }
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-        public DbSet<Statue> Statues { get; }
+        public DbSet<Statue> Statues { get; set; }
 
-        public DbSet<UserStatue> UsersStatues { get; }
+        public DbSet<UserStatue> UsersStatues { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,4 +1,5 @@
 ﻿using Barbarians.Models;
+using Barbarians.Services;
 using Barbarians.ViewModels.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,11 +13,15 @@ namespace Barbarians.Controllers
     {
         private readonly UserManager<ApplicationUser> _user;
         private readonly SignInManager<ApplicationUser> _manager;
+        private readonly IUsersService _usersService;
 
-        public UsersController(UserManager<ApplicationUser> user, SignInManager<ApplicationUser> manager)
+        public UsersController(UserManager<ApplicationUser> user,
+            SignInManager<ApplicationUser> manager,
+            IUsersService usersService)
         {
             this._user = user;
             this._manager = manager;
+            this._usersService = usersService;
         }
 
         public IActionResult Login()
@@ -78,6 +83,7 @@ namespace Barbarians.Controllers
 
                 if (result.Succeeded)
                 {
+                    await _usersService.SeedDatabaseOnSuccessfulRegister(user.Id);
                     await _manager.SignInAsync(user, false);
                     return this.Redirect("/");
                 }
