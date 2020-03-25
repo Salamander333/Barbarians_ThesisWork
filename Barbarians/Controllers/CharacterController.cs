@@ -1,6 +1,7 @@
 ﻿using Barbarians.Data;
 using Barbarians.Models;
 using Barbarians.ViewModels.Character;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -36,6 +37,18 @@ namespace Barbarians.Controllers
             }
 
             return this.Redirect("/");
+        }
+
+        [Authorize]
+        public IActionResult Gather()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public IActionResult Gather(string type)
+        {
+            return null;
         }
     }
 }
