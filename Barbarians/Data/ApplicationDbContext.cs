@@ -26,6 +26,8 @@ namespace Barbarians.Data
 
         public DbSet<UserStatue> UsersStatues { get; set; }
 
+        public DbSet<TaskGather> TasksGather { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

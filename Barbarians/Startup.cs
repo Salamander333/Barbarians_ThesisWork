@@ -52,6 +52,7 @@ namespace Barbarians
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<ITasksService, TasksService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

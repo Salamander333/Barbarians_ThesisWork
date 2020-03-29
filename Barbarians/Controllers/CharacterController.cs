@@ -1,5 +1,6 @@
 ﻿using Barbarians.Data;
 using Barbarians.Models;
+using Barbarians.Services;
 using Barbarians.ViewModels.Character;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,14 +14,17 @@ namespace Barbarians.Controllers
         private readonly SignInManager<ApplicationUser> _manager;
         private readonly UserManager<ApplicationUser> _user;
         private readonly ApplicationDbContext _db;
+        private readonly ITasksService _tasksService;
 
         public CharacterController(SignInManager<ApplicationUser> manager,
             UserManager<ApplicationUser> user,
-            ApplicationDbContext db)
+            ApplicationDbContext db,
+            ITasksService tasksService)
         {
             this._manager = manager;
             this._user = user;
             this._db = db;
+            this._tasksService = tasksService;
         }
 
         public IActionResult Index()
@@ -40,15 +44,34 @@ namespace Barbarians.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult Gather()
         {
             return this.View();
         }
 
         [HttpPost]
-        public IActionResult Gather(string type)
+        public IActionResult Gather(int id)
         {
-            return null;
+            var material = "";
+            var difficulty = "";
+
+            var command = Request.Form.First().Key.Split(":");
+            if (command.Count() == 2)
+            {
+                material = command[0];
+                difficulty = command[1];
+            }
+
+            var validEntry = _tasksService.IsGatheringTaskValid(material, difficulty);
+            if (validEntry)
+            {
+                return Json("succ");
+            }
+            else
+            {
+                return this.Redirect("Gather");
+            }
         }
     }
 }

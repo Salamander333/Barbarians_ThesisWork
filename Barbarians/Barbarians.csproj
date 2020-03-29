@@ -3,7 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-Barbarians-0CA35813-B706-4449-AAC0-ED180351B9A6</UserSecretsId>
+    <StartupObject></StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200329123804_Added_Gather_Tasks.cs" />
+    <Compile Remove="Data\Migrations\20200329123804_Added_Gather_Tasks.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200329124241_Added_Gather_Tasks.cs" />
+    <Compile Remove="Data\Migrations\20200329124241_Added_Gather_Tasks.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200329125140_initial_migration.cs" />
+    <Compile Remove="Data\Migrations\20200329125140_initial_migration.Designer.cs" />
+  </ItemGroup>
 
 
   <ItemGroup>

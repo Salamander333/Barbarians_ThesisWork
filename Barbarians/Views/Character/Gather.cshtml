@@ -7,24 +7,36 @@
 <hr />
 
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-    <div class="btn-group-vertical mr-2" role="group" aria-label="First group">
+    <form method="post" class="btn-group-vertical mr-2" role="group">
         <h3>Woods:</h3>
-        <button type="button" class="btn btn-secondary">Woods of Deloria (90%)</button>
-        <button type="button" class="btn btn-secondary">Woods of Forgotten souls (50%)</button>
-        <button type="button" class="btn btn-secondary">Shadowforest (10%)</button>
+        <input type="submit" class="btn btn-secondary" name="wood:easy" value="Woods of Deloria (90%)" />
+
+        <input type="submit" class="btn btn-secondary" name="wood:medium" value="Woods of Forgotten souls (50%)" />
+
+        <input type="submit" class="btn btn-secondary" name="wood:hard" value="Shadowforest (10%)" />
+    </form>
+    <hr />
+    <div class="btn-group-vertical mr-2" role="group">
+        <form method="post" class="btn-group-vertical mr-2" role="group">
+            <h3>Mines:</h3>
+
+            <input type="submit" class="btn btn-secondary" name="metal:easy" value="Copper mines (90%)" />
+
+            <input type="submit" class="btn btn-secondary" name="metal:medium" value="Goblins gathering grounds (50%)" />
+
+            <input type="submit" class="btn btn-secondary" name="metal:hard" value="Lithium mines (10%)" />
+        </form>
     </div>
     <hr />
-    <div class="btn-group-vertical mr-2" role="group" aria-label="Second group">
-        <h3>Mines:</h3>
-        <button type="button" class="btn btn-secondary">Copper mines (90%)</button>
-        <button type="button" class="btn btn-secondary">Goblins gathering grounds (50%)</button>
-        <button type="button" class="btn btn-secondary">Lithium mines (10%)</button>
-    </div>
-    <hr />
-    <div class="btn-group-vertical" role="group" aria-label="Third group">
-        <h3>Spiders den:</h3>
-        <button type="button" class="btn btn-secondary">Weavers chambers (90%)</button>
-        <button type="button" class="btn btn-secondary">Silk road den (50%)</button>
-        <button type="button" class="btn btn-secondary">Vipers valley (10%)</button>
+    <div class="btn-group-vertical" role="group">
+        <form method="post" class="btn-group-vertical mr-2" role="group">
+            <h3>Spiders den:</h3>
+
+            <input type="submit" class="btn btn-secondary" name="cloth:easy" value="Weavers chambers (90%)" />
+
+            <input type="submit" class="btn btn-secondary" name="cloth:medium" value="Silk road den (50%)" />
+
+            <input type="submit" class="btn btn-secondary" name="cloth:hard" value="Vipers valley (10%)" />
+        </form>
     </div>
 </div>

@@ -1,8 +1,8 @@
 ﻿using Barbarians.Data;
-using Barbarians.Services.Enums;
 using System;
 using System.Threading.Tasks;
 using Barbarians.Models;
+using Barbarians.Data.GlobalEnums;
 
 namespace Barbarians.Services
 {

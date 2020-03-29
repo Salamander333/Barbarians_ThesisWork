@@ -1,4 +1,4 @@
-﻿namespace Barbarians.Services.Enums
+﻿namespace Barbarians.Data.GlobalEnums
 {
     public enum Materials
     {
