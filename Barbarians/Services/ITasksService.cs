@@ -1,11 +1,15 @@
-﻿namespace Barbarians.Services
+﻿using System.Threading.Tasks;
+
+namespace Barbarians.Services
 {
     public interface ITasksService
     {
-        public bool HasActiveTasksOfType(string id, string type);
+        public bool HasActiveTask(string id, string type);
 
-        public bool IsActiveTaskComplete(string id, string type);
+        public Task<bool> IsActiveTaskComplete(string id, string type);
 
         public bool IsGatheringTaskValid(string material, string difficulty);
+
+        public Task GenerateGatheringTask(string material, string difficulty, string userId);
     }
 }

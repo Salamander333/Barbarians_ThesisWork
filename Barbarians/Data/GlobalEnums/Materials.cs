@@ -14,5 +14,8 @@
         Copper = 6,
         Iron = 7,
         Mithril = 8,
+
+        //-----Money------
+        Coins = 9,
     }
 }

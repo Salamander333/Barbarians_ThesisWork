@@ -113,6 +113,10 @@ namespace Barbarians.Data.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 

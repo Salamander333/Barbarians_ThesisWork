@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Barbarians.Controllers
 {
@@ -45,13 +46,28 @@ namespace Barbarians.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Gather()
+        public async Task<IActionResult> Gather()
         {
+            var userId = await _user.GetUserAsync(this.User);
+
+            if (_tasksService.HasActiveTask(userId.Id, "Gather"))
+            {
+                var isComplete =_tasksService.IsActiveTaskComplete(userId.Id, "Gather");
+                if (await isComplete)
+                {
+                    return this.Redirect("Index");
+                }
+                else
+                {
+                    return Json("User has active tasks");
+                }
+            }
+
             return this.View();
         }
 
         [HttpPost]
-        public IActionResult Gather(int id)
+        public async Task<IActionResult> Gather(int id)
         {
             var material = "";
             var difficulty = "";
@@ -66,7 +82,10 @@ namespace Barbarians.Controllers
             var validEntry = _tasksService.IsGatheringTaskValid(material, difficulty);
             if (validEntry)
             {
-                return Json("succ");
+                var userId = await _user.GetUserAsync(this.User);
+
+                await _tasksService.GenerateGatheringTask(material, difficulty, userId.Id);
+                return this.Redirect("/");
             }
             else
             {
