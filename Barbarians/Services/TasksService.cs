@@ -110,6 +110,8 @@ namespace Barbarians.Services
                             result.CoinCount = 30;
                             break;
                         default:
+                            result.MaterialType = "Spruce";
+                            result.CoinCount = new Random().Next(5, 10);
                             break;
                     }
                     break;
@@ -130,6 +132,8 @@ namespace Barbarians.Services
                             result.CoinCount = 30;
                             break;
                         default:
+                            result.MaterialType = "Copper";
+                            result.CoinCount = new Random().Next(5, 10);
                             break;
                     }
                     break;
@@ -150,11 +154,15 @@ namespace Barbarians.Services
                             result.CoinCount = 30;
                             break;
                         default:
+                            result.MaterialType = "Lenin";
+                            result.CoinCount = new Random().Next(5, 10);
                             break;
                     }
                     break;
 
                 default:
+                    result.MaterialType = "Spruce";
+                    result.CoinCount = new Random().Next(5, 10);
                     break;
             }
 

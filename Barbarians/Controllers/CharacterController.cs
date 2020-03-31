@@ -28,8 +28,10 @@ namespace Barbarians.Controllers
             this._tasksService = tasksService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _CheckGatheringTaskCompletion();
+
             if (_manager.IsSignedIn(this.User))
             {
                 var model = new CharacterViewModel
@@ -48,22 +50,14 @@ namespace Barbarians.Controllers
         [HttpGet]
         public async Task<IActionResult> Gather()
         {
-            var userId = await _user.GetUserAsync(this.User);
-
-            if (_tasksService.HasActiveTask(userId.Id, "Gather"))
+            if (await _CheckGatheringTaskCompletion())
             {
-                var isComplete =_tasksService.IsActiveTaskComplete(userId.Id, "Gather");
-                if (await isComplete)
-                {
-                    return this.Redirect("Index");
-                }
-                else
-                {
-                    return Json("User has active tasks");
-                }
+                return this.View();
             }
-
-            return this.View();
+            else
+            {
+                return this.RedirectToAction("AwaitGatherToComplete");
+            }
         }
 
         [HttpPost]
@@ -85,12 +79,46 @@ namespace Barbarians.Controllers
                 var userId = await _user.GetUserAsync(this.User);
 
                 await _tasksService.GenerateGatheringTask(material, difficulty, userId.Id);
-                return this.Redirect("/");
+                return this.RedirectToAction("AwaitGatherToComplete");
             }
             else
             {
-                return this.Redirect("Gather");
+                return this.RedirectToAction("Gather");
             }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AwaitGatherToComplete()
+        {
+            if (await _CheckGatheringTaskCompletion())
+            {
+                return this.RedirectToAction("Gather");
+            }
+            else
+            {
+                return this.View();
+            }
+        }
+
+        private async Task<bool> _CheckGatheringTaskCompletion()
+        {
+            var userId = await _user.GetUserAsync(this.User);
+
+            if (_tasksService.HasActiveTask(userId.Id, "Gather"))
+            {
+                var isComplete = _tasksService.IsActiveTaskComplete(userId.Id, "Gather");
+                if (await isComplete)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
