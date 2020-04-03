@@ -23,15 +23,29 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Character" asp-action="Index">Character</a>
+                                <a class="nav-link text-dark" asp-controller="Character" asp-action="Index">Character</a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Character" asp-action="Gather">Gather</a>
+                                <a class="nav-link text-dark" asp-controller="Character" asp-action="Gather">Gather</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                   asp-controller="Blacksmith" asp-action="Index">
+                                    Blacksmith
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Chest">Chest armor</a>
+                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Leggings">Leggings</a>
+                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Boots">Boots</a>
+                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Weapons">Weapons</a>
+                                </div>
                             </li>
                         }
                     </ul>

@@ -1,0 +1,8 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Blacksmith - " + Model;
+}
+
+<h1>index</h1>
+
+<h2>@await Html.PartialAsync(Model)</h2>
