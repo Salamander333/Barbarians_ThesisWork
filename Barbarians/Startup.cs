@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Barbarians.Models;
 using Barbarians.Services;
+using Barbarians.Data.Seeders;
 
 namespace Barbarians
 {
@@ -37,6 +38,7 @@ namespace Barbarians
             {
                 options.Password.RequireNonAlphanumeric = false;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.ConfigureApplicationCookie(options =>
@@ -49,8 +51,20 @@ namespace Barbarians
                 options.SlidingExpiration = true;
             });
 
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdmin",
+                    policy => policy.RequireRole("Admin"));
+            });
+
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ITasksService, TasksService>();
         }
@@ -66,12 +80,16 @@ namespace Barbarians
                 {
                     dbContext.Database.Migrate();
                 }
+
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+
             }
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+
             }
             else
             {

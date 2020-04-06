@@ -27,10 +27,10 @@ namespace Barbarians.Services
                     UserId = id,
                 };
 
-                _db.Materials.Add(entity);
+                await _db.Materials.AddAsync(entity);
             }
 
-            _db.SaveChanges();
+           await _db.SaveChangesAsync();
         }
     }
 }
