@@ -28,6 +28,10 @@ namespace Barbarians.Data
 
         public DbSet<TaskGather> TasksGather { get; set; }
 
+        public DbSet<CraftableArmor> CraftableArmors { get; set; }
+
+        public DbSet<CraftableWeapon> CraftableWeapons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

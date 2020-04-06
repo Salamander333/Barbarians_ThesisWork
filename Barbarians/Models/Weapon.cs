@@ -10,11 +10,10 @@ namespace Barbarians.Models
 
         [Required]
         [MinLength(3)]
-        [MaxLength(15)]
+        [MaxLength(30)]
         public string Name { get; set; }
 
         [Required]
-        [Range(1, 150)]
         public string Damage { get; set; }
 
         [ForeignKey(nameof(User))]

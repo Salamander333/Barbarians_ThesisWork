@@ -23,7 +23,8 @@ namespace Barbarians.Data.Seeders
             {
                 new RolesSeeder(),
                 new UsersSeeder(),
-
+                new CraftableArmorsSeeder(),
+                new CraftableWeaponsSeeder(),
             };
 
             foreach (var seeder in seeders)
