@@ -1,0 +1,68 @@
+﻿@model Barbarians.ViewModels.Craftables.CraftableModelForPartial
+@{
+    var armors = Model.CraftableArmors.OrderBy(x => x.CraftCost).ToList();
+    var classForText = "";
+    var classForTextCoins = "";
+}
+<table class="table table-striped">
+    <thead>
+        <tr style="font-size:x-large">
+            <th scope="col">Name</th>
+            <th scope="col">Material Required</th>
+            <th scope="col">Material Count</th>
+            <th scope="col">Defence</th>
+            <th scope="col">Cost to craft</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < armors.Count(); i++)
+        {
+            var hasMaterials = false;
+            var hasCoins = false;
+            var canCraft = false;
+
+            var materialName = armors[i].MaterialRequired.ToString();
+            if (Model.UserMaterials.Find(x => x.Name == materialName).Count >= armors[i].MaterialCount)
+            {
+                classForText = "text-dark";
+                hasMaterials = true;
+            }
+            else
+            {
+                classForText = "text-danger";
+
+            }
+
+            if (Model.UserMaterials.Find(x => x.Name == "Coins").Count >= armors[i].CraftCost)
+            {
+                classForTextCoins = "text-dark";
+                hasCoins = true;
+            }
+            else
+            {
+                classForTextCoins = "text-danger";
+            }
+
+            if (hasCoins && hasMaterials)
+            {
+                canCraft = true;
+            }
+
+        <tr style="font-size:x-large">
+            <td>@armors[i].Name</td>
+            <td class="@classForText">@armors[i].MaterialRequired</td>
+            <td class="@classForText">@armors[i].MaterialCount</td>
+            <td>@armors[i].Defence</td>
+            <td class="@classForTextCoins">@armors[i].CraftCost</td>
+            @if (canCraft)
+            {
+                <td><button class="btn-primary">Craft</button></td>
+            }
+            else
+            {
+                <td style="font-size:medium">Insufficient funds.</td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>

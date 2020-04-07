@@ -1,8 +1,26 @@
-﻿@model string
+﻿@model Barbarians.ViewModels.Craftables.CraftableModel
 @{
-    ViewData["Title"] = "Blacksmith - " + Model;
+    ViewData["Title"] = "Blacksmith - " + Model.Title;
 }
 
-<h1>index</h1>
+<h1>Choose an item to craft:</h1>
+<span>
+    @("Coins: " + Model.PartialView.UserMaterials.Find(x => x.Name == "Coins").Count + " | ")
+    @foreach (var rescource in Model.PartialView.UserMaterials.OrderBy(x => x.Name))
+    {
+        if (rescource.Name != "Coins")
+        {
+            @(rescource.Name + ": " + rescource.Count + " | ")
+        }
+    }
+</span>
+<hr />
 
-<h2>@await Html.PartialAsync(Model)</h2>
+@if (Model.PartialName == "_BlacksmithWeapons")
+{
+    <h2>@await Html.PartialAsync(Model.PartialName, Model.PartialView)</h2>
+}
+else
+{
+    <h2>@await Html.PartialAsync(Model.PartialName, Model.PartialView)</h2>
+}
