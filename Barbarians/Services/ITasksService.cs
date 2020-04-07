@@ -11,5 +11,7 @@ namespace Barbarians.Services
         public bool IsGatheringTaskValid(string material, string difficulty);
 
         public Task GenerateGatheringTask(string material, string difficulty, string userId);
+
+        public Task<bool> CheckGatheringTaskCompletion(string userId);
     }
 }

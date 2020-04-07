@@ -3,7 +3,7 @@
     public enum Materials
     {
         //-----Cloths------
-        Lenin = 0,
+        Linen = 0,
         Jute = 1,
         Silk = 2,
         //-----Woods------

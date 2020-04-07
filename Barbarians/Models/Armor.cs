@@ -14,7 +14,10 @@ namespace Barbarians.Models
         public string Name { get; set; }
 
         [Required]
-        public string Defence { get; set; }
+        public int Defence { get; set; }
+
+        [Required]
+        public bool IsBroken { get; set; }
 
         [ForeignKey(nameof(User))]
         public string UserId { get; set; }

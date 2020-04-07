@@ -142,7 +142,7 @@ namespace Barbarians.Services
                     switch (difficulty)
                     {
                         case "Easy":
-                            result.MaterialType = "Lenin";
+                            result.MaterialType = "Linen";
                             result.CoinCount = new Random().Next(5, 10);
                             break;
                         case "Medium":
@@ -154,7 +154,7 @@ namespace Barbarians.Services
                             result.CoinCount = 30;
                             break;
                         default:
-                            result.MaterialType = "Lenin";
+                            result.MaterialType = "Linen";
                             result.CoinCount = new Random().Next(5, 10);
                             break;
                     }
@@ -167,6 +167,25 @@ namespace Barbarians.Services
             }
 
             return result;
+        }
+
+        public async Task<bool> CheckGatheringTaskCompletion(string userId)
+        {
+
+            if (this.HasActiveTask(userId, "Gather"))
+            {
+                var isComplete = this.IsActiveTaskComplete(userId, "Gather");
+                if (await isComplete)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 

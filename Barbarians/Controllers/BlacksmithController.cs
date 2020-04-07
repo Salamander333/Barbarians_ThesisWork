@@ -1,11 +1,10 @@
 ﻿using Barbarians.Data;
-using Barbarians.Data.GlobalEnums;
 using Barbarians.Models;
-using Barbarians.ViewModels.Craftables;
+using Barbarians.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace Barbarians.Controllers
 {
@@ -13,79 +12,46 @@ namespace Barbarians.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _user;
+        private readonly IBlacksmithService _blacksmithService;
+        private readonly ITasksService _tasksService;
 
-        public BlacksmithController(ApplicationDbContext db, UserManager<ApplicationUser> user)
+        public BlacksmithController(ApplicationDbContext db,
+            UserManager<ApplicationUser> user,
+            IBlacksmithService blacksmithService,
+            ITasksService tasksService)
         {
             this._db = db;
             this._user = user;
+            this._blacksmithService = blacksmithService;
+            this._tasksService = tasksService;
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Index(string craft)
+        public async Task<IActionResult> Index(string craft)
         {
-            var model = new CraftableModel
-            {
-                Title = "",
-                PartialName = "",
-                PartialView = new CraftableModelForPartial
-                {
-                    CraftableArmors = _db.CraftableArmors
-                    .Select(x => new CraftableArmorViewModel
-                    {
-                        Name = x.Name,
-                        Type = x.Type,
-                        MaterialRequired = x.MaterialRequired,
-                        MaterialCount = x.MaterialCount,
-                        Defence = x.Defence,
-                        CraftCost = x.CraftCost,
-                    })
-                    .ToList(),
-                    CraftableWeapons = _db.CraftableWeapons
-                    .Select(x => new CraftableWeaponViewModel
-                    {
-                        Name = x.Name,
-                        Type = x.Type,
-                        MaterialRequired = x.MaterialRequired,
-                        MaterialCount = x.MaterialCount,
-                        Damage = x.Damage,
-                        CraftCost = x.CraftCost
-                    })
-                    .ToList(),
-                    UserMaterials = this._db.Materials.Where(x => x.UserId == _user.GetUserId(this.User)).ToList(),
-                },
-            };
+            var userId = await _user.GetUserAsync(this.User);
 
-            if (craft == "Chest")
+            await _tasksService.CheckGatheringTaskCompletion(userId.Id);
+
+            if (craft != "Chest" && craft != "Leggings" && craft != "Boots" && craft != "Weapons")
             {
-                model.Title = "Chest";
-                model.PartialView.CraftableArmors = model.PartialView.CraftableArmors.Where(x => x.Type == ArmorTypes.Chest).ToList();
-                model.PartialName = "_BlacksmithArmors";
-            }
-            else if (craft == "Leggings")
-            {
-                model.Title = "Leggings";
-                model.PartialView.CraftableArmors = model.PartialView.CraftableArmors.Where(x => x.Type == ArmorTypes.Leggings).ToList();
-                model.PartialName = "_BlacksmithArmors";
-            }
-            else if (craft == "Boots")
-            {
-                model.Title = "Leggings";
-                model.PartialView.CraftableArmors = model.PartialView.CraftableArmors.Where(x => x.Type == ArmorTypes.Boots).ToList();
-                model.PartialName = "_BlacksmithArmors";
-            }
-            else if (craft == "Weapons")
-            {
-                model.Title = "Weapons";
-                model.PartialName = "_BlacksmithWeapons";
-            }
-            else
-            {
-                return this.BadRequest("Not found");
+                return this.BadRequest("Page not found.");
             }
 
+            var model = _blacksmithService.CreateCraftableModel(craft, _user.GetUserId(this.User));
 
             return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CraftArmor(string id)
+        {
+            var user = await _user.GetUserAsync(this.User);
+            await _blacksmithService.AddArmorItemToUser(id, user.Id);
+
+            return this.Redirect("/Character");
         }
     }
 }

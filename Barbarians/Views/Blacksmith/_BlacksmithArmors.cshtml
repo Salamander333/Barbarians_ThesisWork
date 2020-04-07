@@ -48,7 +48,7 @@
                 canCraft = true;
             }
 
-        <tr style="font-size:x-large">
+         <tr style="font-size:x-large">
             <td>@armors[i].Name</td>
             <td class="@classForText">@armors[i].MaterialRequired</td>
             <td class="@classForText">@armors[i].MaterialCount</td>
@@ -56,13 +56,18 @@
             <td class="@classForTextCoins">@armors[i].CraftCost</td>
             @if (canCraft)
             {
-                <td><button class="btn-primary">Craft</button></td>
+            <td>
+                <form method="post" asp-controller="Blacksmith" asp-action="CraftArmor">
+                    <input type="hidden" name="id" value="@armors[i].Id" />
+                    <input type="submit" class="btn-primary" name="Wood:Easy" value="Craft" />
+                </form>
+            </td>
             }
             else
             {
                 <td style="font-size:medium">Insufficient funds.</td>
             }
-        </tr>
+         </tr>
         }
     </tbody>
 </table>

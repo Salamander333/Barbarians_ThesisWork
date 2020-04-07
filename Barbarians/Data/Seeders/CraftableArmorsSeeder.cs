@@ -29,9 +29,9 @@ namespace Barbarians.Data.Seeders
                 ("Silk Boots", ArmorTypes.Boots, Materials.Silk, 1, 1, 10),
 
                 //------------------Tier 2------------------------------------------
-                ("Lenin Robe", ArmorTypes.Chest, Materials.Lenin, 5, 4, 35),
-                ("Lenin Leggings", ArmorTypes.Leggings, Materials.Lenin, 3, 3, 25),
-                ("Lenin Boots", ArmorTypes.Boots, Materials.Lenin, 2, 1, 15),
+                ("Linen Robe", ArmorTypes.Chest, Materials.Linen, 5, 4, 35),
+                ("Linen Leggings", ArmorTypes.Leggings, Materials.Linen, 3, 3, 25),
+                ("LenLinenin Boots", ArmorTypes.Boots, Materials.Linen, 2, 1, 15),
 
                 //------------------Tier 3------------------------------------------
                 ("Jute Robe", ArmorTypes.Chest, Materials.Jute, 6, 5, 45),

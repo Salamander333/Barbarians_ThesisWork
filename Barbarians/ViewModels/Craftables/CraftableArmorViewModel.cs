@@ -5,6 +5,8 @@ namespace Barbarians.ViewModels.Craftables
 {
     public class CraftableArmorViewModel
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public ArmorTypes Type { get; set; }

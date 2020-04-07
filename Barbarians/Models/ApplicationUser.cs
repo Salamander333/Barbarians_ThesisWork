@@ -12,6 +12,9 @@ namespace Barbarians.Models
             this.Weapons = new HashSet<Weapon>();
         }
 
+        [Required]
+        public int Health { get; set; }
+
         public ICollection<Armor> Armors { get; set; }
 
         public ICollection<Weapon> Weapons { get; set; }

@@ -3,10 +3,62 @@
 }
 @model Barbarians.ViewModels.Character.CharacterViewModel;
 
-<h1>@Model.Username</h1>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th class="align-content-center" scope="col">@Model.Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var material in Model.Materials)
+            {
+                <td>@material.Name : @material.Count</td>
+            }
+        </tr>
+    </tbody>
+</table>
 
-@foreach (var material in Model.Materials)
-{
-    <h2>@material.Name : @material.Count</h2>
-}
+<div class="container">
+    <div class="row" style="">
+        <div class="col-sm" style="text-align:center">
+            @Model.Username
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var material in Model.Materials)
+        {
+            <div class="col-sm" style="text-align:center">
+                @material.Name : @material.Count
+            </div>
+        }
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <td class="field-label col-xs-3 active">
+            <label>Field 1:</label>
+        </td>
+        <td class="col-md-9">
+            Value 1
+        </td>
+    </tr>
+    <tr>
+        <td class="field-label col-xs-3 active">
+            <label>Field 2:</label>
+        </td>
+        <td class="col-md-9">
+            Value 2
+        </td>
+    </tr>
+    <tr>
+        <td class="field-label col-xs-3 active">
+            <label>Field 3:</label>
+        </td>
+        <td class="col-md-9">
+            Value 3
+        </td>
+    </tr>
+</table>
 

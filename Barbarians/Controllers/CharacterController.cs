@@ -30,7 +30,9 @@ namespace Barbarians.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await _CheckGatheringTaskCompletion();
+            var userId = await _user.GetUserAsync(this.User);
+
+            await _tasksService.CheckGatheringTaskCompletion(userId.Id);
 
             if (_manager.IsSignedIn(this.User))
             {
@@ -50,7 +52,9 @@ namespace Barbarians.Controllers
         [HttpGet]
         public async Task<IActionResult> Gather()
         {
-            if (await _CheckGatheringTaskCompletion())
+            var userId = await _user.GetUserAsync(this.User);
+
+            if (await _tasksService.CheckGatheringTaskCompletion(userId.Id))
             {
                 return this.View();
             }
@@ -91,7 +95,9 @@ namespace Barbarians.Controllers
         [HttpGet]
         public async Task<IActionResult> AwaitGatherToComplete()
         {
-            if (await _CheckGatheringTaskCompletion())
+            var userId = await _user.GetUserAsync(this.User);
+
+            if (await _tasksService.CheckGatheringTaskCompletion(userId.Id))
             {
                 return this.RedirectToAction("Gather");
             }
@@ -101,24 +107,6 @@ namespace Barbarians.Controllers
             }
         }
 
-        private async Task<bool> _CheckGatheringTaskCompletion()
-        {
-            var userId = await _user.GetUserAsync(this.User);
-
-            if (_tasksService.HasActiveTask(userId.Id, "Gather"))
-            {
-                var isComplete = _tasksService.IsActiveTaskComplete(userId.Id, "Gather");
-                if (await isComplete)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        
     }
 }
