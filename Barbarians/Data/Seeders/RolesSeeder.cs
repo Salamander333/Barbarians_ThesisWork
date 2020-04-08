@@ -15,6 +15,7 @@ namespace Barbarians.Data.Seeders
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+            await SeedRoleAsync(roleManager, IdentityRoles.OwnerRoleName);
             await SeedRoleAsync(roleManager, IdentityRoles.AdministratorRoleName);
             await SeedRoleAsync(roleManager, IdentityRoles.UserRoleName);
         }

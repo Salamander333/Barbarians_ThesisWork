@@ -50,12 +50,7 @@ namespace Barbarians.Services
 
         public bool IsGatheringTaskValid(string material, string difficulty)
         {
-            if (material == "Wood" || material == "Metal" || material == "Cloth")
-            {
-                return true;
-            }
-
-            if (difficulty == "Easy" || difficulty == "Medium" || difficulty == "Hard")
+            if (Enum.IsDefined(typeof(MaterialType), material) && Enum.IsDefined(typeof(AdventureDifficulties), difficulty))
             {
                 return true;
             }
@@ -65,13 +60,14 @@ namespace Barbarians.Services
 
         public async Task GenerateGatheringTask(string material, string difficulty, string userId)
         {
-            var adventure = _GetGatherTaskRewards(material, difficulty);
+            var adventure = _GetGatherTaskRewards((MaterialType)Enum.Parse(typeof(MaterialType), material),
+                                                  (AdventureDifficulties)Enum.Parse(typeof(AdventureDifficulties), difficulty));
 
             var task = new TaskGather
             {
                 Id = Guid.NewGuid().ToString(),
                 StartTime = DateTime.UtcNow,
-                EndTime = DateTime.UtcNow.AddSeconds(30),
+                EndTime = DateTime.UtcNow.AddSeconds(5),
                 Rescource = (Materials)Enum.Parse(typeof(Materials), adventure.MaterialType, true),
                 Count = adventure.MaterialCount,
                 GoldIncome = adventure.CoinCount,
@@ -83,7 +79,7 @@ namespace Barbarians.Services
             await _db.SaveChangesAsync();
         }
 
-        private Rescource _GetGatherTaskRewards(string material, string difficulty)
+        private Rescource _GetGatherTaskRewards(MaterialType material, AdventureDifficulties difficulty)
         {
             var result = new Rescource
             {
@@ -94,18 +90,18 @@ namespace Barbarians.Services
 
             switch (material)
             {
-                case "Wood":
+                case MaterialType.Wood:
                     switch (difficulty)
                     {
-                        case "Easy":
+                        case AdventureDifficulties.Easy:
                             result.MaterialType = "Spruce";
                             result.CoinCount = new Random().Next(5, 10);
                             break;
-                        case "Medium":
+                        case AdventureDifficulties.Medium:
                             result.MaterialType = "Oak";
                             result.CoinCount = new Random().Next(15, 20);
                             break;
-                        case "Hard":
+                        case AdventureDifficulties.Hard:
                             result.MaterialType = "Ash";
                             result.CoinCount = 30;
                             break;
@@ -116,18 +112,18 @@ namespace Barbarians.Services
                     }
                     break;
 
-                case "Metal":
+                case MaterialType.Metal:
                     switch (difficulty)
                     {
-                        case "Easy":
+                        case AdventureDifficulties.Easy:
                             result.MaterialType = "Copper";
                             result.CoinCount = new Random().Next(5, 10);
                             break;
-                        case "Medium":
+                        case AdventureDifficulties.Medium:
                             result.MaterialType = "Iron";
                             result.CoinCount = new Random().Next(15, 20);
                             break;
-                        case "Hard":
+                        case AdventureDifficulties.Hard:
                             result.MaterialType = "Mithril";
                             result.CoinCount = 30;
                             break;
@@ -138,23 +134,23 @@ namespace Barbarians.Services
                     }
                     break;
 
-                case "Cloth":
+                case MaterialType.Cloth:
                     switch (difficulty)
                     {
-                        case "Easy":
-                            result.MaterialType = "Linen";
+                        case AdventureDifficulties.Easy:
+                            result.MaterialType = "Silk";
                             result.CoinCount = new Random().Next(5, 10);
                             break;
-                        case "Medium":
-                            result.MaterialType = "Jute";
+                        case AdventureDifficulties.Medium:
+                            result.MaterialType = "Linen";
                             result.CoinCount = new Random().Next(15, 20);
                             break;
-                        case "Hard":
-                            result.MaterialType = "Silk";
+                        case AdventureDifficulties.Hard:
+                            result.MaterialType = "Jute";
                             result.CoinCount = 30;
                             break;
                         default:
-                            result.MaterialType = "Linen";
+                            result.MaterialType = "Silk";
                             result.CoinCount = new Random().Next(5, 10);
                             break;
                     }

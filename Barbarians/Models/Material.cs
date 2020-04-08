@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Barbarians.Data.GlobalEnums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Barbarians.Models
@@ -12,6 +13,12 @@ namespace Barbarians.Models
         [MinLength(3)]
         [MaxLength(15)]
         public string Name { get; set; }
+
+        [Required]
+        public MaterialType Type { get; set; }
+
+        [Required]
+        public int Tier { get; set; }
 
         [Required]
         [Range(1, 5)]

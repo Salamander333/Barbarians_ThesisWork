@@ -7,36 +7,65 @@
 <hr />
 
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-    <form method="post" class="btn-group-vertical mr-2" role="group">
-        <h3>Woods:</h3>
-        <input type="submit" class="btn btn-secondary" name="Wood:Easy" value="Woods of Deloria (90%)" />
-
-        <input type="submit" class="btn btn-secondary" name="Wood:Medium" value="Woods of Forgotten souls (50%)" />
-
-        <input type="submit" class="btn btn-secondary" name="Wood:Hard" value="Shadowforest (10%)" />
-    </form>
-    <hr />
     <div class="btn-group-vertical mr-2" role="group">
-        <form method="post" class="btn-group-vertical mr-2" role="group">
-            <h3>Mines:</h3>
-
-            <input type="submit" class="btn btn-secondary" name="Metal:Easy" value="Copper mines (90%)" />
-
-            <input type="submit" class="btn btn-secondary" name="Metal:Medium" value="Goblins gathering grounds (50%)" />
-
-            <input type="submit" class="btn btn-secondary" name="Metal:Hard" value="Lithium mines (10%)" />
+        <h3>Woods:</h3>
+        <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+            <input type="hidden" name="material" value="Wood" />
+            <input type="hidden" name="difficulty" value="Easy" />
+            <input type="submit" class="btn btn-secondary" name="" value="Woods of Deloria (90%)" />
+        </form>
+        <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+            <input type="hidden" name="material" value="Wood" />
+            <input type="hidden" name="difficulty" value="Medium" />
+            <input type="submit" class="btn btn-secondary" name="" value="Woods of Forgotten souls (50%)" />
+        </form>
+        <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+            <input type="hidden" name="material" value="Wood" />
+            <input type="hidden" name="difficulty" value="Hard" />
+            <input type="submit" class="btn btn-secondary" name="" value="Shadowforest (10%)" />
         </form>
     </div>
     <hr />
+    <div class="btn-group-vertical mr-2" role="group">
+        <div class="btn-group-vertical mr-2" role="group">
+            <h3>Mines:</h3>
+            <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+                <input type="hidden" name="material" value="Metal" />
+                <input type="hidden" name="difficulty" value="Easy" />
+                <input type="submit" class="btn btn-secondary" name="" value="Copper mines (90%)" />
+            </form>
+            <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+                <input type="hidden" name="material" value="Metal" />
+                <input type="hidden" name="difficulty" value="Medium" />
+                <input type="submit" class="btn btn-secondary" name="" value="Goblins gathering grounds (50%)" />
+            </form>
+            <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+                <input type="hidden" name="material" value="Metal" />
+                <input type="hidden" name="difficulty" value="Hard" />
+                <input type="submit" class="btn btn-secondary" name="" value="Lithium mines (10%)" />
+            </form>
+        </div>
+    </div>
+    <hr />
     <div class="btn-group-vertical" role="group">
-        <form method="post" class="btn-group-vertical mr-2" role="group">
+        <div class="btn-group-vertical mr-2" role="group">
             <h3>Spiders den:</h3>
 
-            <input type="submit" class="btn btn-secondary" name="Cloth:Easy" value="Weavers chambers (90%)" />
-
-            <input type="submit" class="btn btn-secondary" name="Cloth:Medium" value="Silk road den (50%)" />
-
-            <input type="submit" class="btn btn-secondary" name="Cloth:Hard" value="Vipers valley (10%)" />
-        </form>
+            <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+                <input type="hidden" name="material" value="Cloth" />
+                <input type="hidden" name="difficulty" value="Easy" />
+                <input type="submit" class="btn btn-secondary" name="" value="Weavers chambers (90%)" />
+            </form>
+            <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+                <input type="hidden" name="material" value="Cloth" />
+                <input type="hidden" name="difficulty" value="Medium" />
+                <input type="submit" class="btn btn-secondary" name="" value="Silk road den (50%)" />
+            </form>
+            <form class="btn-group" method="post" asp-controller="Character" asp-action="Gather">
+                <input type="hidden" name="material" value="Cloth" />
+                <input type="hidden" name="difficulty" value="Hard" />
+                <input type="submit" class="btn btn-secondary" name="" value="Vipers valley (10%)" />
+            </form>
+        </div>
     </div>
 </div>

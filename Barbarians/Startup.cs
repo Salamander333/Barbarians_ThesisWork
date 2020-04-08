@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Barbarians.Models;
 using Barbarians.Services;
 using Barbarians.Data.Seeders;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Barbarians
 {
@@ -61,9 +62,13 @@ namespace Barbarians
 
             services.AddAuthorization(options =>
             {
+                options.AddPolicy("RequireOwner",
+                    policy => policy.RequireRole("Owner"));
+
                 options.AddPolicy("RequireAdmin",
                     policy => policy.RequireRole("Admin"));
             });
+            services.AddMvc(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ITasksService, TasksService>();

@@ -17,12 +17,14 @@ namespace Barbarians.Services
 
         public async Task SeedDatabaseOnSuccessfulRegister(string id)
         {
-            foreach (var material in Enum.GetValues(typeof(Materials)))
+            foreach (var material in MaterialList.MaterialObjects)
             {
                 var entity = new Material
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = material.ToString(),
+                    Name = material.Name.ToString(),
+                    Type = material.Type,
+                    Tier = material.Tier,
                     Count = 0,
                     UserId = id,
                 };

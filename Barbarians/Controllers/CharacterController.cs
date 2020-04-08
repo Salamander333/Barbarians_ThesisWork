@@ -1,10 +1,12 @@
 ﻿using Barbarians.Data;
+using Barbarians.Data.GlobalEnums;
 using Barbarians.Models;
 using Barbarians.Services;
 using Barbarians.ViewModels.Character;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,6 +30,7 @@ namespace Barbarians.Controllers
             this._tasksService = tasksService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var userId = await _user.GetUserAsync(this.User);
@@ -65,18 +68,8 @@ namespace Barbarians.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Gather(int id)
+        public async Task<IActionResult> Gather(string material, string difficulty)
         {
-            var material = "";
-            var difficulty = "";
-
-            var command = Request.Form.First().Key.Split(":");
-            if (command.Count() == 2)
-            {
-                material = command[0];
-                difficulty = command[1];
-            }
-
             var validEntry = _tasksService.IsGatheringTaskValid(material, difficulty);
             if (validEntry)
             {

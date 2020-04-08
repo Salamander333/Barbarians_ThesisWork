@@ -2,10 +2,11 @@
 {
     public enum Materials
     {
+        //Ordered by tier
         //-----Cloths------
-        Linen = 0,
-        Jute = 1,
-        Silk = 2,
+        Silk = 0,
+        Linen = 1,
+        Jute = 2,
         //-----Woods------
         Spruce = 3,
         Oak = 4,

@@ -17,15 +17,16 @@ namespace Barbarians.Data.Seeders
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var userService = new UsersService(dbContext);
 
-            if (dbContext.Users.Count() >= 2)
+            if (dbContext.Users.Count() >= 3)
             {
                 return;
             }
 
-            var users = new List<(string Username, string Email, string Password, string Role)>
+            var users = new List<(string Username, string Email, string Password, string Role, int Health)>
             {
-                ("Salamander", "asd@abv.bg", "Asd123", "User"),
-                ("SalamanderAdmin", "asd@abv.bg", "Asd123", "Admin"),
+                ("Salamander", "asd@abv.bg", "Asd123", "User", 100),
+                ("SalamanderAdmin", "asd@abv.bg", "Asd123", "Admin", 100),
+                ("SalamanderOwner", "asd@abv.bg", "Asd123", "Owner", 100),
             };
 
             foreach (var user in users)
@@ -34,6 +35,7 @@ namespace Barbarians.Data.Seeders
                 {
                     UserName = user.Username,
                     Email = user.Email,
+                    Health = user.Health,
                 };
 
                 var result = await userManager.CreateAsync(foo, user.Password);
@@ -44,6 +46,10 @@ namespace Barbarians.Data.Seeders
                     if (foo.UserName == "SalamanderAdmin")
                     {
                         role = IdentityRoles.AdministratorRoleName;
+                    }
+                    else if (foo.UserName == "SalamanderOwner")
+                    {
+                        role = IdentityRoles.OwnerRoleName;
                     }
 
                     await userManager.AddToRoleAsync(foo, role);
