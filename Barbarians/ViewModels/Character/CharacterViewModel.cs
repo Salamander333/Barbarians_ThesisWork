@@ -14,6 +14,8 @@ namespace Barbarians.ViewModels.Character
 
         public string Username { get; set; }
 
+        public int Health { get; set; }
+
         public ICollection<Armor> Armors { get; set; }
 
         public ICollection<Weapon> Weapons { get; set; }

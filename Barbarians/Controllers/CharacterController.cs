@@ -42,7 +42,10 @@ namespace Barbarians.Controllers
                 var model = new CharacterViewModel
                 {
                     Username = this.User.Identity.Name,
+                    Health = _db.ApplicationUsers.FirstOrDefault(x => x.Id == _user.GetUserId(this.User)).Health,
                     Materials = _db.Materials.Where(x => x.UserId == _user.GetUserId(this.User)).ToList(),
+                    Armors = _db.Armors.ToList(),
+                    Weapons = _db.Weapons.ToList(),
                 };
 
                 return this.View(model);

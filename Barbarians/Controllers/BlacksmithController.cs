@@ -1,9 +1,11 @@
 ﻿using Barbarians.Data;
+using Barbarians.Data.GlobalEnums;
 using Barbarians.Models;
 using Barbarians.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Barbarians.Controllers
@@ -34,7 +36,7 @@ namespace Barbarians.Controllers
 
             await _tasksService.CheckGatheringTaskCompletion(userId.Id);
 
-            if (craft != "Chest" && craft != "Leggings" && craft != "Boots" && craft != "Weapons")
+            if (!Enum.IsDefined(typeof(ArmorTypes), craft) && craft != "Weapons")
             {
                 return this.BadRequest("Page not found.");
             }

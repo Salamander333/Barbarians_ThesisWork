@@ -11,24 +11,76 @@
         </div>
         <div class="row" style="">
             <div class="col-sm" style="text-align:center">
-                Health: ---
+                Health: @Model.Health
+            </div>
+            <div class="col-sm" style="text-align:center">
+                Coins: @Model.Materials.FirstOrDefault(x => x.Name == "Coins").Count
             </div>
         </div>
+
         <hr />
+
         <div class="row">
             <div class="col-sm" style="text-align:center">
-                @foreach (var material in Model.Materials)
+                Character rescources
+            </div>
+        </div>
+        <div class="row">
+            @{
+                var materialType = Model.Materials.Select(x => x.Type).Distinct();
+                @foreach (var type in materialType)
                 {
-                    <div>@material.Name : @material.Count</div>
+                    if (type.ToString() != "Currency")
+                    {
+                        <div class="col-sm" style="text-align:center">
+                            <div>@type.ToString()s:</div>
+                            @foreach (var material in Model.Materials.Where(x => x.Type == type).OrderBy(x => x.Tier))
+                            {
+                                <div>@material.Name : @material.Count</div>
+                            }
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-sm" style="text-align:center">
+                Armors
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm" style="text-align:center">
+                Available armors:
+                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).OrderByDescending(x => x.Defence))
+                {
+                    <div>Name: @armor.Name Defence: @armor.Defence</div>
                 }
             </div>
-
             <div class="col-sm" style="text-align:center">
-                asdasdasdasd
+                Broken armors:
+                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == true).OrderByDescending(x => x.Defence))
+                {
+                    <div>Name: @armor.Name Defence: @armor.Defence</div>
+                }
+            </div>
+        </div>
 
-                asdasd
-                asdasdasd
-                asdasd
+        <hr />
+
+        <div class="row">
+            <div class="col-sm" style="text-align:center">
+                Weapons
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm" style="text-align:center">
+                Available weapons:
+            </div>
+            <div class="col-sm" style="text-align:center">
+                Broken weapons:
             </div>
         </div>
     </div>
