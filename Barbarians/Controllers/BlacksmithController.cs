@@ -55,5 +55,15 @@ namespace Barbarians.Controllers
 
             return this.Redirect("/Character");
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CraftWeapon(string id)
+        {
+            var user = await _user.GetUserAsync(this.User);
+            await _blacksmithService.AddWeaponItemToUser(id, user.Id);
+
+            return this.Redirect("/Character");
+        }
     }
 }

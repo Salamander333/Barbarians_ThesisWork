@@ -1,4 +1,5 @@
-﻿using Barbarians.Data;
+﻿using AutoMapper;
+using Barbarians.Data;
 using Barbarians.Data.GlobalEnums;
 using Barbarians.Models;
 using Barbarians.ViewModels.Craftables;
@@ -12,10 +13,12 @@ namespace Barbarians.Services
     public class BlacksmithService : IBlacksmithService
     {
         private readonly ApplicationDbContext _db;
+        private readonly IMapper _mapper;
 
-        public BlacksmithService(ApplicationDbContext db, UserManager<ApplicationUser> user)
+        public BlacksmithService(ApplicationDbContext db, UserManager<ApplicationUser> user, IMapper mapper)
         {
             this._db = db;
+            this._mapper = mapper;
         }
 
         public async Task AddArmorItemToUser(string id, string userId)
@@ -25,6 +28,7 @@ namespace Barbarians.Services
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = itemFromDb.Name,
+                Type = itemFromDb.Type,
                 Defence = itemFromDb.Defence,
                 IsBroken = false,
                 UserId = userId
@@ -40,9 +44,27 @@ namespace Barbarians.Services
             await _db.SaveChangesAsync();
         }
 
-        public Task AddWeaponItemToUser(string id, string userId)
+        public async Task AddWeaponItemToUser(string id, string userId)
         {
-            throw new System.NotImplementedException();
+            var itemFromDb = _db.CraftableWeapons.SingleOrDefault(x => x.Id == id);
+            var itemToAdd = new Weapon
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = itemFromDb.Name,
+                Type = itemFromDb.Type,
+                Damage = itemFromDb.Damage,
+                IsBroken = false,
+                UserId = userId
+            };
+
+            var userMaterial = _db.Materials.Where(x => x.UserId == userId).FirstOrDefault(x => x.Name == itemFromDb.MaterialRequired.ToString());
+            userMaterial.Count -= itemFromDb.MaterialCount;
+
+            var userCoins = _db.Materials.Where(x => x.UserId == userId).FirstOrDefault(x => x.Name == "Coins");
+            userCoins.Count -= itemFromDb.CraftCost;
+
+            await _db.Weapons.AddAsync(itemToAdd);
+            await _db.SaveChangesAsync();
         }
 
         public CraftableModel CreateCraftableModel(string craft, string userId)
@@ -54,28 +76,14 @@ namespace Barbarians.Services
                 PartialView = new CraftableModelForPartial
                 {
                     CraftableArmors = _db.CraftableArmors
-                     .Select(x => new CraftableArmorViewModel
-                     {
-                         Id = x.Id,
-                         Name = x.Name,
-                         Type = x.Type,
-                         MaterialRequired = x.MaterialRequired,
-                         MaterialCount = x.MaterialCount,
-                         Defence = x.Defence,
-                         CraftCost = x.CraftCost,
-                     })
+                     .Select(x =>
+                        _mapper.Map<CraftableArmorViewModel>(x)
+                     )
                      .ToList(),
                     CraftableWeapons = _db.CraftableWeapons
-                     .Select(x => new CraftableWeaponViewModel
-                     {
-                         Id = x.Id,
-                         Name = x.Name,
-                         Type = x.Type,
-                         MaterialRequired = x.MaterialRequired,
-                         MaterialCount = x.MaterialCount,
-                         Damage = x.Damage,
-                         CraftCost = x.CraftCost
-                     })
+                     .Select(x =>
+                        _mapper.Map<CraftableWeaponViewModel>(x)
+                     )
                      .ToList(),
                     UserMaterials = this._db.Materials.Where(x => x.UserId == userId).ToList(),
                 },

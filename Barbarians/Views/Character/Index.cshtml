@@ -2,6 +2,7 @@
     ViewData["Title"] = "Character";
 }
 @model Barbarians.ViewModels.Character.CharacterViewModel;
+@using Barbarians.Data.GlobalEnums;
 
     <div class="table table-dark">
         <div class="row" style="">
@@ -53,17 +54,24 @@
         </div>
         <div class="row">
             <div class="col-sm" style="text-align:center">
-                Available armors:
-                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).OrderByDescending(x => x.Defence))
+                Chest armors:
+                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).Where(x => x.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence))
                 {
-                    <div>Name: @armor.Name Defence: @armor.Defence</div>
+                    <div>@armor.Name - @armor.Defence DEF</div>
                 }
             </div>
             <div class="col-sm" style="text-align:center">
-                Broken armors:
-                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == true).OrderByDescending(x => x.Defence))
+                Leggings:
+                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).Where(x => x.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence))
                 {
-                    <div>Name: @armor.Name Defence: @armor.Defence</div>
+                    <div>@armor.Name - @armor.Defence DEF</div>
+                }
+            </div>
+            <div class="col-sm" style="text-align:center">
+                Boots:
+                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).Where( x => x.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence))
+                {
+                    <div>@armor.Name - @armor.Defence DEF</div>
                 }
             </div>
         </div>
@@ -77,10 +85,10 @@
         </div>
         <div class="row">
             <div class="col-sm" style="text-align:center">
-                Available weapons:
-            </div>
-            <div class="col-sm" style="text-align:center">
-                Broken weapons:
+                @foreach (var weapon in Model.Weapons.Where(x => x.IsBroken == false).OrderByDescending(x => x.Damage))
+                {
+                    <div>@weapon.Name - @weapon.Damage DMG</div>
+                }
             </div>
         </div>
     </div>

@@ -31,6 +31,7 @@ namespace Barbarians.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userId = await _user.GetUserAsync(this.User);

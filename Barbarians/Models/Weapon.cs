@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Barbarians.Data.GlobalEnums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Barbarians.Models
@@ -12,6 +13,9 @@ namespace Barbarians.Models
         [MinLength(3)]
         [MaxLength(30)]
         public string Name { get; set; }
+
+        [Required]
+        public WeaponTypes Type { get; set; }
 
         [Required]
         public int Damage { get; set; }

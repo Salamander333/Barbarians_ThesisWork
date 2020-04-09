@@ -57,9 +57,9 @@
                 @if (canCraft)
                 {
                     <td>
-                        <form method="post" asp-controller="Blacksmith" asp-action="CraftArmor">
+                        <form method="post" asp-controller="Blacksmith" asp-action="CraftWeapon">
                             <input type="hidden" name="id" value="@weapons[i].Id" />
-                            <input type="submit" class="btn-primary" name="Wood:Easy" value="Craft" />
+                            <input type="submit" class="btn-primary" name="" value="Craft" />
                         </form>
                     </td>
                 }

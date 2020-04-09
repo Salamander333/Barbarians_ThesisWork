@@ -16,6 +16,7 @@ using Barbarians.Models;
 using Barbarians.Services;
 using Barbarians.Data.Seeders;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace Barbarians
 {
@@ -57,6 +58,7 @@ namespace Barbarians
                 options.HeaderName = "X-CSRF-TOKEN";
             });
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
 
