@@ -12,6 +12,8 @@ namespace Barbarians.ViewModels.Character
             this.Statues = new HashSet<Statue>();
         }
 
+        public string Id { get; set; }
+
         public string Username { get; set; }
 
         public int Health { get; set; }

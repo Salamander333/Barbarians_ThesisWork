@@ -55,21 +55,21 @@
         <div class="row">
             <div class="col-sm" style="text-align:center">
                 Chest armors:
-                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).Where(x => x.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence))
+                @foreach (var armor in Model.Armors.Where(x => x.UserId == Model.Id && x.IsBroken == false && x.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence))
                 {
                     <div>@armor.Name - @armor.Defence DEF</div>
                 }
             </div>
             <div class="col-sm" style="text-align:center">
                 Leggings:
-                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).Where(x => x.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence))
+                @foreach (var armor in Model.Armors.Where(x => x.UserId == Model.Id && x.IsBroken == false && x.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence))
                 {
                     <div>@armor.Name - @armor.Defence DEF</div>
                 }
             </div>
             <div class="col-sm" style="text-align:center">
                 Boots:
-                @foreach (var armor in Model.Armors.Where(x => x.IsBroken == false).Where( x => x.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence))
+                @foreach (var armor in Model.Armors.Where(x => x.UserId == Model.Id && x.IsBroken == false && x.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence))
                 {
                     <div>@armor.Name - @armor.Defence DEF</div>
                 }
@@ -85,7 +85,7 @@
         </div>
         <div class="row">
             <div class="col-sm" style="text-align:center">
-                @foreach (var weapon in Model.Weapons.Where(x => x.IsBroken == false).OrderByDescending(x => x.Damage))
+                @foreach (var weapon in Model.Weapons.Where(x => x.UserId == Model.Id).Where(x => x.IsBroken == false).OrderByDescending(x => x.Damage))
                 {
                     <div>@weapon.Name - @weapon.Damage DMG</div>
                 }

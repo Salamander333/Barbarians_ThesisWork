@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Arena";
+}
+
+@model List<Barbarians.ViewModels.Arena.ArenaContestantViewModel>
+
+<h3>Welcome to the arena warrior!</h3>
+<hr />
+<span>
+    Battles have 4 turns, the attacker goes first.
+    <br />
+    Every warrior uses their armors and weapon with highest status.
+    <br />
+    At the end of the battle if the attacker is victorious steals coins from the defendant.
+    <br />
+    The armors and weapons used in the battle are broken at the end of the battle.
+    <br />
+</span>
+<br />
+<h5>Choose an opponent to battle:</h5>
+<table class="table table-striped">
+    <thead>
+        <tr style="font-size:x-large">
+            <th scope="col">Name</th>
+            <th scope="col">Defence</th>
+            <th scope="col">Damage</th>
+            <th scope="col">Health</th>
+            <th scope="col">Coins</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count > 0)
+        {
+            var contestantsOrdered = Model.OrderByDescending(x => x.Coins);
+
+            @foreach (var contestant in contestantsOrdered)
+            {
+                <tr style="font-size:x-large">
+                    <td>@contestant.Name</td>
+                    <td>@contestant.Defence</td>
+                    <td>@contestant.Damage</td>
+                    <td>@contestant.Health</td>
+                    <td>@contestant.Coins</td>
+                    <td>
+                        <form method="post" asp-controller="Arena" asp-action="Attack">
+                            <input type="hidden" name="opponentName" value="@contestant.Name" />
+                            <input type="submit" class="btn-primary" name="" value="Attack" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

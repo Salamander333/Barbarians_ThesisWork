@@ -75,6 +75,7 @@ namespace Barbarians
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ITasksService, TasksService>();
             services.AddTransient<IBlacksmithService, BlacksmithService>();
+            services.AddTransient<IArenaService, ArenaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
