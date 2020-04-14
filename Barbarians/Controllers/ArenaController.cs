@@ -52,12 +52,12 @@ namespace Barbarians.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Attack(string opponentName)
+        public async Task<IActionResult> Attack(string opponentName)
         {
             var attackerName = _userManager.GetUserName(this.User);
-            var result = _arenaService.AttackOpponent(attackerName, opponentName);
+            var result = await _arenaService.AttackOpponent(attackerName, opponentName);
 
-            return Json(attackerName);
+            return Json(result);
         }
     }
 }
