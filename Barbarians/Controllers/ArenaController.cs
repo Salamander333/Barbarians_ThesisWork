@@ -38,10 +38,10 @@ namespace Barbarians.Controllers
                 {
                     Name = x.UserName,
                     Defence =
-                    (x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
-                    (x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
-                    (x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault().Defence),
-                    Damage = x.Weapons.Where(s => s.UserId == x.Id).OrderByDescending(x => x.Damage).First().Damage,
+                    (x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Chest && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
+                    (x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Leggings && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
+                    (x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Boots && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : x.Armors.Where(s => s.UserId == x.Id && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault().Defence),
+                    Damage = x.Weapons.Where(s => s.UserId == x.Id && s.IsBroken == false).OrderByDescending(x => x.Damage).First().Damage,
                     Coins = x.Materials.Where(s => s.UserId == x.Id).Where(x => x.Type == MaterialType.Currency).First().Count,
                     Health = x.Health
                 })
@@ -57,7 +57,20 @@ namespace Barbarians.Controllers
             var attackerName = _userManager.GetUserName(this.User);
             var result = await _arenaService.AttackOpponent(attackerName, opponentName);
 
-            return Json(result);
+            return RedirectToAction("BattleResult", new { id = result});
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult BattleResult(string id)
+        {
+            var report = _db.BattleReports.Where(x => x.Id == id).FirstOrDefault();
+            if (_userManager.GetUserId(this.User) == report.AttackerId || _userManager.GetUserId(this.User) == report.OpponentId)
+            {
+                return this.View(new BattleReportViewModel { BattleLog = report.ReportString.Split(new[] { '\r', '\n' })});
+            }
+
+            return Json("Access denied.");
         }
     }
 }

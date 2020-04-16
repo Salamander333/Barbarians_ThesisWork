@@ -35,19 +35,22 @@
 
             @foreach (var contestant in contestantsOrdered)
             {
-                <tr style="font-size:x-large">
-                    <td>@contestant.Name</td>
-                    <td>@contestant.Defence</td>
-                    <td>@contestant.Damage</td>
-                    <td>@contestant.Health</td>
-                    <td>@contestant.Coins</td>
-                    <td>
-                        <form method="post" asp-controller="Arena" asp-action="Attack">
-                            <input type="hidden" name="opponentName" value="@contestant.Name" />
-                            <input type="submit" class="btn-primary" name="" value="Attack" />
-                        </form>
-                    </td>
-                </tr>
+                if (contestant.Health > 1)
+                {
+                    <tr style="font-size:x-large">
+                        <td>@contestant.Name</td>
+                        <td>@contestant.Defence</td>
+                        <td>@contestant.Damage</td>
+                        <td>@contestant.Health</td>
+                        <td>@contestant.Coins</td>
+                        <td>
+                            <form method="post" asp-controller="Arena" asp-action="Attack">
+                                <input type="hidden" name="opponentName" value="@contestant.Name" />
+                                <input type="submit" class="btn-primary" name="" value="Attack" />
+                            </form>
+                        </td>
+                    </tr>
+                }
             }
         }
     </tbody>

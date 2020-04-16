@@ -1,5 +1,6 @@
 ﻿using Barbarians.Data;
 using Barbarians.Data.GlobalEnums;
+using Barbarians.Models;
 using System;
 using System.Linq;
 using System.Text;
@@ -24,19 +25,19 @@ namespace Barbarians.Services
             var attackerId = _db.ApplicationUsers.Where(x => x.UserName == attackerName).FirstOrDefault().Id;
             var attackerCoins = _db.Materials.Where(s => s.UserId == attackerId).Where(x => x.Type == MaterialType.Currency).First().Count;
             var attackerHp = _db.ApplicationUsers.Where(x => x.UserName == attackerName).FirstOrDefault().Health;
-            var attackerDamage = _db.Weapons.Where(s => s.UserId == attackerId).OrderByDescending(x => x.Damage).FirstOrDefault() == null ? 10 : _db.Weapons.Where(s => s.UserId == attackerId).OrderByDescending(x => x.Damage).FirstOrDefault().Damage;
-            var attackerDefence = (_db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
-                                  (_db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
-                                  (_db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault().Defence);
+            var attackerDamage = _db.Weapons.Where(s => s.UserId == attackerId && s.IsBroken == false).OrderByDescending(x => x.Damage).FirstOrDefault() == null ? 0 : _db.Weapons.Where(s => s.UserId == attackerId && s.IsBroken == false).OrderByDescending(x => x.Damage).FirstOrDefault().Damage;
+            var attackerDefence = (_db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Chest && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Chest && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
+                                  (_db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Leggings && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Leggings && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
+                                  (_db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Boots && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == attackerId && s.Type == ArmorTypes.Boots && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault().Defence);
 
 
             var opponentId = _db.ApplicationUsers.Where(x => x.UserName == opponentName).FirstOrDefault().Id;
             var opponentCoins = _db.Materials.Where(s => s.UserId == opponentId).Where(x => x.Type == MaterialType.Currency).First().Count;
             var opponentHp = _db.ApplicationUsers.Where(x => x.UserName == opponentName).FirstOrDefault().Health;
-            var opponentDamage = _db.Weapons.Where(s => s.UserId == opponentId).OrderByDescending(x => x.Damage).FirstOrDefault() == null ? 10 : _db.Weapons.Where(s => s.UserId == attackerId).OrderByDescending(x => x.Damage).FirstOrDefault().Damage;
-            var opponentDefence = (_db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
-                                  (_db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
-                                  (_db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault().Defence);
+            var opponentDamage = _db.Weapons.Where(s => s.UserId == opponentId && s.IsBroken == false).OrderByDescending(x => x.Damage).FirstOrDefault() == null ? 0 : _db.Weapons.Where(s => s.UserId == attackerId && s.IsBroken == false).OrderByDescending(x => x.Damage).FirstOrDefault().Damage;
+            var opponentDefence = (_db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Chest && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Chest && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
+                                  (_db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Leggings && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Leggings && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault().Defence) +
+                                  (_db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Boots && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault() == null ? 0 : _db.Armors.Where(s => s.UserId == opponentId && s.Type == ArmorTypes.Boots && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault().Defence);
 
             for (int i = 0; i < 4; i++)
             {
@@ -62,6 +63,7 @@ namespace Barbarians.Services
                         }
 
                         result.Append($"{opponentName} died.");
+                        result.AppendLine();
                         result.Append($"{attackerName} took {reward} gold from {opponentName}.");
                         result.AppendLine();
                         await _FinalizeBattle(attackerId, opponentId, reward, attackerHp, opponentHp, "Attacker");
@@ -81,6 +83,7 @@ namespace Barbarians.Services
                     if (_IsAttackedPlayerDead(attackerHp))
                     {
                         result.Append($"{attackerName} died.");
+                        result.AppendLine();
                         result.Append($"{opponentName} defended his glory and gold.");
                         result.AppendLine();
                         await _FinalizeBattle(opponentId, attackerId, 0, attackerHp, opponentHp, "Opponent");
@@ -95,7 +98,18 @@ namespace Barbarians.Services
                 }
             }
 
-            return result.ToString();
+            var report = new BattleReport
+            {
+                Id = Guid.NewGuid().ToString(),
+                AttackerId = attackerId,
+                OpponentId = opponentId,
+                ReportString = result.ToString()
+            };
+
+            await _db.BattleReports.AddAsync(report);
+            await _db.SaveChangesAsync();
+
+            return report.Id;
         }
 
         private bool _IsAttackedPlayerDead(int hp)
@@ -121,19 +135,19 @@ namespace Barbarians.Services
                 .FirstOrDefault();
             looserCoins.Count -= reward;
 
-            var winnerWeapon = _db.Weapons.Where(s => s.UserId == winnerId).OrderByDescending(x => x.Damage).FirstOrDefault();
-            var winnerChest = _db.Armors.Where(s => s.UserId == winnerId && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault();
-            var winnerLeggings = _db.Armors.Where(s => s.UserId == winnerId && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault();
-            var winnerBoots = _db.Armors.Where(s => s.UserId == winnerId && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault();
+            var winnerWeapon = _db.Weapons.Where(s => s.UserId == winnerId && s.IsBroken == false).OrderByDescending(x => x.Damage).FirstOrDefault();
+            var winnerChest = _db.Armors.Where(s => s.UserId == winnerId && s.Type == ArmorTypes.Chest && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault();
+            var winnerLeggings = _db.Armors.Where(s => s.UserId == winnerId && s.Type == ArmorTypes.Leggings && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault();
+            var winnerBoots = _db.Armors.Where(s => s.UserId == winnerId && s.Type == ArmorTypes.Boots && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault();
             if (winnerWeapon != null) winnerWeapon.IsBroken = true;
             if (winnerChest != null) winnerChest.IsBroken = true;
             if (winnerLeggings != null) winnerLeggings.IsBroken = true;
             if (winnerBoots != null) winnerBoots.IsBroken = true;
 
-            var looserWeapon = _db.Weapons.Where(s => s.UserId == looserId).OrderByDescending(x => x.Damage).FirstOrDefault();
-            var looserChest = _db.Armors.Where(s => s.UserId == looserId && s.Type == ArmorTypes.Chest).OrderByDescending(x => x.Defence).FirstOrDefault();
-            var looserLeggings = _db.Armors.Where(s => s.UserId == looserId && s.Type == ArmorTypes.Leggings).OrderByDescending(x => x.Defence).FirstOrDefault();
-            var looserBoots = _db.Armors.Where(s => s.UserId == looserId && s.Type == ArmorTypes.Boots).OrderByDescending(x => x.Defence).FirstOrDefault();
+            var looserWeapon = _db.Weapons.Where(s => s.UserId == looserId && s.IsBroken == false).OrderByDescending(x => x.Damage).FirstOrDefault();
+            var looserChest = _db.Armors.Where(s => s.UserId == looserId && s.Type == ArmorTypes.Chest && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault();
+            var looserLeggings = _db.Armors.Where(s => s.UserId == looserId && s.Type == ArmorTypes.Leggings && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault();
+            var looserBoots = _db.Armors.Where(s => s.UserId == looserId && s.Type == ArmorTypes.Boots && s.IsBroken == false).OrderByDescending(x => x.Defence).FirstOrDefault();
             if (looserWeapon != null) looserWeapon.IsBroken = true;
             if (looserChest != null) looserChest.IsBroken = true;
             if (looserLeggings != null) looserLeggings.IsBroken = true;
@@ -145,12 +159,26 @@ namespace Barbarians.Services
             if (winnerIs == "Attacker")
             {
                 winnerHp.Health = attackerHp;
-                looserHp.Health = opponentHp;
+                if (opponentHp < 1)
+                {
+                    looserHp.Health = 1;
+                }
+                else
+                {
+                    looserHp.Health = opponentHp;
+                }
             }
             else if (winnerIs == "Opponent")
             {
                 winnerHp.Health = opponentHp;
-                looserHp.Health = attackerHp;
+                if (attackerHp < 1)
+                {
+                    looserHp.Health = 1;
+                }
+                else
+                {
+                    looserHp.Health = attackerHp;
+                }
             }
 
             await _db.SaveChangesAsync();

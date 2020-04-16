@@ -32,6 +32,8 @@ namespace Barbarians.Data
 
         public DbSet<CraftableWeapon> CraftableWeapons { get; set; }
 
+        public DbSet<BattleReport> BattleReports { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
