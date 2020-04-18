@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Barbarians.Controllers
@@ -51,9 +52,17 @@ namespace Barbarians.Controllers
         public async Task<IActionResult> CraftArmor(string id)
         {
             var user = await _user.GetUserAsync(this.User);
-            await _blacksmithService.AddArmorItemToUser(id, user.Id);
+            if (await _HasEnoughRescources(id, "Armors"))
+            {
+                await _blacksmithService.AddArmorItemToUser(id, user.Id);
 
-            return this.Redirect("/Character");
+                return this.Redirect("/Character");
+            }
+            else
+            {
+                return Json("Invalid entry. Stop trying to mess with the ids.");
+            }
+            
         }
 
         [HttpPost]
@@ -61,9 +70,44 @@ namespace Barbarians.Controllers
         public async Task<IActionResult> CraftWeapon(string id)
         {
             var user = await _user.GetUserAsync(this.User);
-            await _blacksmithService.AddWeaponItemToUser(id, user.Id);
+            if (await _HasEnoughRescources(id, "Weapons"))
+            {
+                await _blacksmithService.AddWeaponItemToUser(id, user.Id);
 
-            return this.Redirect("/Character");
+                return this.Redirect("/Character");
+            }
+            else
+            {
+                return Json("Invalid entry. Stop trying to mess with the ids.");
+            }
+        }
+
+        private async Task<bool> _HasEnoughRescources(string itemId, string dbTable)
+        {
+            var user = await _user.GetUserAsync(this.User);
+            int materialsRequiredCount = 0;
+            string materialType = "";
+
+            if (dbTable == "Armors")
+            {
+                var item = (CraftableArmor)_db.CraftableArmors.Where(x => x.Id == itemId).SingleOrDefault();
+                materialType = item.MaterialRequired.ToString();
+                materialsRequiredCount = item.MaterialCount;
+            }
+            else if (dbTable == "Weapons")
+            {
+                var item = (CraftableWeapon)_db.CraftableWeapons.Where(x => x.Id == itemId).SingleOrDefault();
+                materialType = item.MaterialRequired.ToString();
+                materialsRequiredCount = item.MaterialCount;
+            }
+
+            var userMaterial = _db.Materials.Where(x => x.UserId == user.Id && x.Name == materialType).FirstOrDefault();
+            if (userMaterial.Count >= materialsRequiredCount)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

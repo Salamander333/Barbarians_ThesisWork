@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Healer";
+}
+
+@model Barbarians.ViewModels.Healer.HealerCharacterViewModel;
+
+<h5 class="text-center">Hello weary traveler, come stay a while, for a small price we can take care of your wounds.</h5>
+<br />
+<div class="text-center">
+    @if (Model.IsFullLife)
+    {
+        <span>You are already at full health.</span>
+        <input class="btn-primary" type="button" value="Return to character screen" onclick="location.href='@Url.Action("Index", "Character")'" />
+    }
+    else
+    {
+        <span>Cost to heal to full life: @Model.CostToHeal</span>
+        <form method="post" asp-controller="Blacksmith" asp-action="CraftWeapon">
+            <input type="submit" class="btn-primary" name="" value="Heal" />
+        </form>
+
+    }
+</div>
