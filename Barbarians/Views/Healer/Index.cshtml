@@ -9,13 +9,15 @@
 <div class="text-center">
     @if (Model.IsFullLife)
     {
-        <span>You are already at full health.</span>
+        <span>You are at full health.</span>
+        <br />
         <input class="btn-primary" type="button" value="Return to character screen" onclick="location.href='@Url.Action("Index", "Character")'" />
     }
     else
     {
         <span>Cost to heal to full life: @Model.CostToHeal</span>
-        <form method="post" asp-controller="Blacksmith" asp-action="CraftWeapon">
+        <br />
+        <form method="post" asp-controller="Healer" asp-action="Heal">
             <input type="submit" class="btn-primary" name="" value="Heal" />
         </form>
 
