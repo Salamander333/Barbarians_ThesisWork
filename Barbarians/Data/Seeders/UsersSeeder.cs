@@ -26,7 +26,6 @@ namespace Barbarians.Data.Seeders
             {
                 ("Salamander", "asd@abv.bg", "Asd123", "User", 100),
                 ("SalamanderAdmin", "asd@abv.bg", "Asd123", "Admin", 100),
-                ("SalamanderOwner", "asd@abv.bg", "Asd123", "Owner", 100),
             };
 
             foreach (var user in users)

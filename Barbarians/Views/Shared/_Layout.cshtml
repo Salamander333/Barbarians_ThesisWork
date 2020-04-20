@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Barbarians.Data.GlobalEnums
 @inject SignInManager<ApplicationUser> SignInManager
 
 <!DOCTYPE html>
@@ -23,16 +24,16 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Character" asp-action="Index">Character</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Character" asp-action="Index">Character</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Character" asp-action="Gather">Gather</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Character" asp-action="Gather">Gather</a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -41,10 +42,10 @@
                                     Blacksmith
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Chest">Chest armor</a>
-                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Leggings">Leggings</a>
-                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Boots">Boots</a>
-                                    <a class="dropdown-item" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Weapons">Weapons</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Chest">Chest armor</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Leggings">Leggings</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Boots">Boots</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Blacksmith" asp-action="Index" asp-route-craft="Weapons">Weapons</a>
                                 </div>
                             </li>
 
@@ -55,6 +56,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Healer" asp-action="Index">Healer</a>
                             </li>
+
+                            if (this.User.IsInRole(IdentityRoles.OwnerRoleName) ||
+                                this.User.IsInRole(IdentityRoles.AdministratorRoleName))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Administration" asp-controller="Administration" asp-action="Index">Admin</a>
+                                </li>
+                            }
                         }
                     </ul>
                 </div>

@@ -62,14 +62,7 @@ namespace Barbarians
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("RequireOwner",
-                    policy => policy.RequireRole("Owner"));
-
-                options.AddPolicy("RequireAdmin",
-                    policy => policy.RequireRole("Admin"));
-            });
+            services.AddAuthorization();
             services.AddMvc(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
             services.AddTransient<IUsersService, UsersService>();
@@ -119,8 +112,13 @@ namespace Barbarians
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                name: "Administration",
+                pattern: "{area:exists}/{controller=Administration}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }
