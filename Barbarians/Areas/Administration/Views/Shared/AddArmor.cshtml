@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Admin - Add Armor";
+}
+
+@model Barbarians.Areas.Administration.ViewModels.Admin.AdminAddArmorViewModel;
+@using Barbarians.Data.GlobalEnums;
+
+<section class="py-5">
+    <div class="container">
+        <h1 style="margin: 2%; text-align: center;">Add armor:</h1>
+        <div style="padding: 5%;">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div>
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Type"></label>
+                    <select class="custom-select" name="Type" asp-for="Type">   
+                        <option value="@ArmorTypes.Chest">@ArmorTypes.Chest</option>
+                        <option value="@ArmorTypes.Leggings">@ArmorTypes.Leggings</option>
+                        <option value="@ArmorTypes.Boots">@ArmorTypes.Boots</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label asp-for="MaterialRequired"></label>
+                    <select class="custom-select" name="MaterialRequired" asp-for="MaterialRequired">
+                        <option value="@Materials.Ash">@Materials.Ash</option>
+                        <option value="@Materials.Oak">@Materials.Oak</option>
+                        <option value="@Materials.Spruce">@Materials.Spruce</option>
+                        <option value="@Materials.Copper">@Materials.Copper</option>
+                        <option value="@Materials.Iron">@Materials.Iron</option>
+                        <option value="@Materials.Mithril">@Materials.Mithril</option>
+                        <option value="@Materials.Jute">@Materials.Jute</option>
+                        <option value="@Materials.Linen">@Materials.Linen</option>
+                        <option value="@Materials.Silk">@Materials.Silk</option>
+                    </select>
+                    <span asp-validation-for="MaterialRequired" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label asp-for="MaterialCount"></label>
+                    <input asp-for="MaterialCount" class="form-control" />
+                    <span asp-validation-for="MaterialCount" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Defence"></label>
+                    <input asp-for="Defence" class="form-control" />
+                    <span asp-validation-for="Defence" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Cost"></label>
+                    <input asp-for="Cost" class="form-control" />
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+
+                <hr />
+                <div class="text-center">
+                    <input type="submit" name="name" value="Add" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
