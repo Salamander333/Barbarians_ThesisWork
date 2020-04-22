@@ -22,30 +22,10 @@ namespace Barbarians.Services
 
             if (type == "Gather")
             {
-                result = _db.TasksGather.Any(x => x.IsComplete == false);
+                result = _db.TasksGather.Any(x => x.UserId == id && x.IsComplete == false);
             }
             
             return result;
-        }
-
-        public async Task<bool> IsActiveTaskComplete(string id, string type)
-        {
-            var task = _db.TasksGather.FirstOrDefault(x => x.IsComplete == false);
-            var userRescources = _db.Materials.Where(x => x.UserId == id);
-
-            if (DateTime.UtcNow > task.EndTime)
-            {
-                task.IsComplete = true;
-                var rescource = userRescources.Where(x => x.Name == task.Rescource.ToString()).FirstOrDefault();
-                rescource.Count += task.Count;
-                var coins = userRescources.Where(x => x.Name == "Coins").FirstOrDefault();
-                coins.Count += task.GoldIncome;
-
-                await _db.SaveChangesAsync();
-                return true;
-            }
-
-            return false;
         }
 
         public bool IsGatheringTaskValid(string material, string difficulty)
@@ -77,6 +57,44 @@ namespace Barbarians.Services
 
             await _db.TasksGather.AddAsync(task);
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<bool> CheckGatheringTaskCompletion(string userId)
+        {
+
+            if (this.HasActiveTask(userId, "Gather"))
+            {
+                var isComplete = this._IsActiveTaskComplete(userId, "Gather");
+                if (await isComplete)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private async Task<bool> _IsActiveTaskComplete(string id, string type)
+        {
+            var task = _db.TasksGather.FirstOrDefault(x => x.UserId == id && x.IsComplete == false);
+            var userRescources = _db.Materials.Where(x => x.UserId == id);
+
+            if (DateTime.UtcNow > task.EndTime)
+            {
+                task.IsComplete = true;
+                var rescource = userRescources.Where(x => x.Name == task.Rescource.ToString()).FirstOrDefault();
+                if (rescource != null) { rescource.Count += task.Count; }
+                var coins = userRescources.Where(x => x.Name == "Coins").FirstOrDefault();
+                if (coins != null) { coins.Count += task.GoldIncome; }
+                await _db.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
         private Rescource _GetGatherTaskRewards(MaterialType material, AdventureDifficulties difficulty)
@@ -163,25 +181,6 @@ namespace Barbarians.Services
             }
 
             return result;
-        }
-
-        public async Task<bool> CheckGatheringTaskCompletion(string userId)
-        {
-
-            if (this.HasActiveTask(userId, "Gather"))
-            {
-                var isComplete = this.IsActiveTaskComplete(userId, "Gather");
-                if (await isComplete)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 

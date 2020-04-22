@@ -6,8 +6,6 @@ namespace Barbarians.Services
     {
         public bool HasActiveTask(string id, string type);
 
-        public Task<bool> IsActiveTaskComplete(string id, string type);
-
         public bool IsGatheringTaskValid(string material, string difficulty);
 
         public Task GenerateGatheringTask(string material, string difficulty, string userId);
