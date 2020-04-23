@@ -24,35 +24,35 @@ namespace Barbarians.Data.Seeders
             {
                 //------------------Cloth Armor-------------------------------------
                 //------------------Tier 1------------------------------------------
-                ("Silk Robe", ArmorTypes.Chest, Materials.Silk, 3, 3, 25),
-                ("Silk Leggings", ArmorTypes.Leggings, Materials.Silk, 2, 2, 15),
-                ("Silk Boots", ArmorTypes.Boots, Materials.Silk, 1, 1, 10),
+                ("Silk Robe", ArmorTypes.Chest, Materials.Silk, 10, 15, 50),
+                ("Silk Leggings", ArmorTypes.Leggings, Materials.Silk, 7, 7, 35),
+                ("Silk Boots", ArmorTypes.Boots, Materials.Silk, 4, 5, 20),
 
                 //------------------Tier 2------------------------------------------
-                ("Linen Robe", ArmorTypes.Chest, Materials.Linen, 5, 4, 35),
-                ("Linen Leggings", ArmorTypes.Leggings, Materials.Linen, 3, 3, 25),
-                ("Linen Boots", ArmorTypes.Boots, Materials.Linen, 2, 1, 15),
+                ("Linen Robe", ArmorTypes.Chest, Materials.Linen, 15, 25, 80),
+                ("Linen Leggings", ArmorTypes.Leggings, Materials.Linen, 10, 15, 50),
+                ("Linen Boots", ArmorTypes.Boots, Materials.Linen, 8, 7, 30),
 
                 //------------------Tier 3------------------------------------------
-                ("Jute Robe", ArmorTypes.Chest, Materials.Jute, 6, 5, 45),
-                ("Jute Leggings", ArmorTypes.Leggings, Materials.Jute, 5, 4, 30),
-                ("Jute Boots", ArmorTypes.Boots, Materials.Jute, 2, 3, 20),
+                ("Jute Robe", ArmorTypes.Chest, Materials.Jute, 20, 35, 100),
+                ("Jute Leggings", ArmorTypes.Leggings, Materials.Jute, 15, 25, 80),
+                ("Jute Boots", ArmorTypes.Boots, Materials.Jute, 10, 14, 35),
 
                 //------------------Metal Armor-------------------------------------
                 //------------------Tier 1------------------------------------------
-                ("Copper Robe", ArmorTypes.Chest, Materials.Copper, 5, 8, 70),
-                ("Copper Leggings", ArmorTypes.Leggings, Materials.Copper, 3, 6, 50),
-                ("Copper Boots", ArmorTypes.Boots, Materials.Copper, 2, 2, 30),
+                ("Copper Robe", ArmorTypes.Chest, Materials.Copper, 10, 30, 150),
+                ("Copper Leggings", ArmorTypes.Leggings, Materials.Copper, 7, 15, 80),
+                ("Copper Boots", ArmorTypes.Boots, Materials.Copper, 4, 10, 45),
 
                 //------------------Tier 2------------------------------------------
-                ("Iron Robe", ArmorTypes.Chest, Materials.Iron, 6, 12, 95),
-                ("Iron Leggings", ArmorTypes.Leggings, Materials.Iron, 5, 10, 65),
-                ("Iron Boots", ArmorTypes.Boots, Materials.Iron, 2, 8, 45),
+                ("Iron Robe", ArmorTypes.Chest, Materials.Iron, 15, 45, 200),
+                ("Iron Leggings", ArmorTypes.Leggings, Materials.Iron, 10, 27, 100),
+                ("Iron Boots", ArmorTypes.Boots, Materials.Iron, 8, 15, 60),
 
                 //------------------Tier 3------------------------------------------
-                ("Mithril Robe", ArmorTypes.Chest, Materials.Mithril, 3, 15, 150),
-                ("Mithril Leggings", ArmorTypes.Leggings, Materials.Mithril, 2, 12, 75),
-                ("Mithril Boots", ArmorTypes.Boots, Materials.Mithril, 1, 10, 45),
+                ("Mithril Robe", ArmorTypes.Chest, Materials.Mithril, 20, 60, 260),
+                ("Mithril Leggings", ArmorTypes.Leggings, Materials.Mithril, 15, 35, 110),
+                ("Mithril Boots", ArmorTypes.Boots, Materials.Mithril, 10, 20, 90),
             };
 
             foreach (var armor in armors)

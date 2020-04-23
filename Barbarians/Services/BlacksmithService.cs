@@ -35,10 +35,10 @@ namespace Barbarians.Services
             };
 
             var userMaterial = _db.Materials.Where(x => x.UserId == userId).FirstOrDefault(x => x.Name == itemFromDb.MaterialRequired.ToString());
-            userMaterial.Count -= itemFromDb.MaterialCount;
+            if (userMaterial != null) { userMaterial.Count -= itemFromDb.MaterialCount; }
 
             var userCoins = _db.Materials.Where(x => x.UserId == userId).FirstOrDefault(x => x.Name == "Coins");
-            userCoins.Count -= itemFromDb.CraftCost;
+            if (userCoins != null) { userCoins.Count -= itemFromDb.CraftCost; }
 
             await _db.Armors.AddAsync(itemToAdd);
             await _db.SaveChangesAsync();
@@ -58,10 +58,10 @@ namespace Barbarians.Services
             };
 
             var userMaterial = _db.Materials.Where(x => x.UserId == userId).FirstOrDefault(x => x.Name == itemFromDb.MaterialRequired.ToString());
-            userMaterial.Count -= itemFromDb.MaterialCount;
+            if (userMaterial != null) { userMaterial.Count -= itemFromDb.MaterialCount; }
 
             var userCoins = _db.Materials.Where(x => x.UserId == userId).FirstOrDefault(x => x.Name == "Coins");
-            userCoins.Count -= itemFromDb.CraftCost;
+            if (userCoins != null) { userCoins.Count -= itemFromDb.CraftCost; }
 
             await _db.Weapons.AddAsync(itemToAdd);
             await _db.SaveChangesAsync();

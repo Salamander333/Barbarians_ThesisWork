@@ -103,7 +103,8 @@ namespace Barbarians.Services
                 Id = Guid.NewGuid().ToString(),
                 AttackerId = attackerId,
                 OpponentId = opponentId,
-                ReportString = result.ToString()
+                ReportString = result.ToString(),
+                Date = DateTime.UtcNow
             };
 
             await _db.BattleReports.AddAsync(report);

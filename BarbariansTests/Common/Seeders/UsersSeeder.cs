@@ -10,11 +10,13 @@ namespace BarbariansTests.Common.Seeders
         {
             var user1 = new ApplicationUser()
             {
+                Id = "Id1",
                 UserName = "User1",
             };
 
             var user2 = new ApplicationUser()
             {
+                Id = "Id2",
                 UserName = "User2",
             };
 

@@ -102,7 +102,7 @@ namespace Barbarians.Services
             var result = new Rescource
             {
                 MaterialType = "",
-                MaterialCount = new Random().Next(1, 3),
+                MaterialCount = new Random().Next(5, 15),
                 CoinCount = 0,
             };
 
@@ -121,7 +121,7 @@ namespace Barbarians.Services
                             break;
                         case AdventureDifficulties.Hard:
                             result.MaterialType = "Ash";
-                            result.CoinCount = 30;
+                            result.CoinCount = new Random().Next(25, 30);
                             break;
                         default:
                             result.MaterialType = "Spruce";
@@ -143,7 +143,7 @@ namespace Barbarians.Services
                             break;
                         case AdventureDifficulties.Hard:
                             result.MaterialType = "Mithril";
-                            result.CoinCount = 30;
+                            result.CoinCount = new Random().Next(25, 30);
                             break;
                         default:
                             result.MaterialType = "Copper";
@@ -165,7 +165,7 @@ namespace Barbarians.Services
                             break;
                         case AdventureDifficulties.Hard:
                             result.MaterialType = "Jute";
-                            result.CoinCount = 30;
+                            result.CoinCount = new Random().Next(25, 30);
                             break;
                         default:
                             result.MaterialType = "Silk";

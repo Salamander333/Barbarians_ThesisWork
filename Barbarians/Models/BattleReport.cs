@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Barbarians.Models
@@ -16,5 +17,8 @@ namespace Barbarians.Models
 
         [Required]
         public string OpponentId { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
     }
 }
