@@ -55,6 +55,57 @@ namespace Barbarians.Data.Seeders
                     await userService.SeedDatabaseOnSuccessfulRegister(foo.Id);
                 }
             }
+
+            //----------Seeding bots---------------
+            for (int i = 0; i < 10; i++)
+            {
+                var foo = new ApplicationUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = $"Bot_{i + 1}",
+                    Email = $"BotEmail{i + 1}@abv.bg",
+                    Health = 100,
+                };
+
+                var result = await userManager.CreateAsync(foo, "botPassword1");
+                if (result.Succeeded)
+                {
+                    await userService.SeedDatabaseOnSuccessfulRegister(foo.Id);
+                    var coins = dbContext.Materials.Where(x => x.Name == "Coins" && x.UserId == foo.Id).FirstOrDefault();
+                    coins.Count = new Random().Next(200, 750);
+
+                    for (int j = 0; j < 10; j++)
+                    {
+                        var randomArmor = new Random().Next(1, 18);
+                        var armor = (CraftableArmor)dbContext.CraftableArmors.Skip(randomArmor).Take(1).FirstOrDefault();
+                        var armorToAdd = new Armor
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Name = armor.Name,
+                            Type = armor.Type,
+                            Defence = armor.Defence,
+                            IsBroken = false,
+                            UserId = foo.Id
+                        };
+
+                        await dbContext.Armors.AddAsync(armorToAdd);
+
+                        var randomWeapon = new Random().Next(1, 12);
+                        var weapon = (CraftableWeapon)dbContext.CraftableWeapons.Skip(randomWeapon).Take(1).FirstOrDefault();
+                        var weaponToAdd = new Weapon
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Name = weapon.Name,
+                            Type = weapon.Type,
+                            Damage = weapon.Damage,
+                            IsBroken = false,
+                            UserId = foo.Id
+                        };
+
+                        await dbContext.Weapons.AddAsync(weaponToAdd);
+                    }
+                }
+            }
         }
     }
 }

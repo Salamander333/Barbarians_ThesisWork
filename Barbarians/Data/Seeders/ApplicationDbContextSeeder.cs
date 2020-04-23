@@ -22,9 +22,9 @@ namespace Barbarians.Data.Seeders
             var seeders = new List<ISeeder>
             {
                 new RolesSeeder(),
-                new UsersSeeder(),
                 new CraftableArmorsSeeder(),
                 new CraftableWeaponsSeeder(),
+                new UsersSeeder(),
             };
 
             foreach (var seeder in seeders)
