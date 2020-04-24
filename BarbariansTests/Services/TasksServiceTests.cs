@@ -1,4 +1,5 @@
 ﻿using Barbarians.Data;
+using Barbarians.Data.GlobalEnums;
 using Barbarians.Models;
 using Barbarians.Services;
 using BarbariansTests.Common;
@@ -12,6 +13,44 @@ namespace BarbariansTests.Services
 {
     public class TasksServiceTests
     {
+        [Fact]
+        public async Task GenerateGatheringTaskShouldAddTaskToDb()
+        {
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var tasksService = this.GetTasksService(context);
+
+            var seeder = new UsersSeeder();
+            await seeder.SeedUsers(context);
+
+            await tasksService.GenerateGatheringTask(MaterialType.Metal.ToString(), AdventureDifficulties.Hard.ToString(), "Id1");
+
+            var result = context.TasksGather.Any(x => x.UserId == "Id1");
+
+            Assert.True(result == true, "User doesn't have generated gathering task.");
+        }
+
+        [Fact]
+        public void ValidGatheringTaskShouldReturnTrue()
+        {
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var tasksService = this.GetTasksService(context);
+
+            var result = tasksService.IsGatheringTaskValid(MaterialType.Cloth.ToString(), AdventureDifficulties.Easy.ToString());
+
+            Assert.True(result == true, "Validity check returns task is invalid when it is.");
+        }
+
+        [Fact]
+        public void InvalidGatheringTaskShouldReturnFalse()
+        {
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var tasksService = this.GetTasksService(context);
+
+            var result = tasksService.IsGatheringTaskValid("invalidParam", "invalidParam");
+
+            Assert.True(result == false, "Validity check returns task is valid when it isn't.");
+        }
+
         [Fact]
         public async Task CheckIfActiveTaskIsComplete()
         {

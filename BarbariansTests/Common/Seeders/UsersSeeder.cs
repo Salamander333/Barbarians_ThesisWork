@@ -12,12 +12,14 @@ namespace BarbariansTests.Common.Seeders
             {
                 Id = "Id1",
                 UserName = "User1",
+                Health = 100
             };
 
             var user2 = new ApplicationUser()
             {
                 Id = "Id2",
                 UserName = "User2",
+                Health = 100
             };
 
             await context.Users.AddAsync(user1);

@@ -15,6 +15,21 @@ namespace BarbariansTests.Services
     public class BlacksmithServiceTests
     {
         [Fact]
+        public async Task CreateCraftableModelReturnsValidModel()
+        {
+            var context = ApplicationDbContextInMemoryFactory.InitializeContext();
+            var service = GetBlacksmithService(context);
+
+            var usersSeeder = new UsersSeeder();
+            await usersSeeder.SeedUsers(context);
+
+            var result = service.CreateCraftableModel("Chest", "Id1");
+
+            Assert.True(result.Title == "Chest", "Model doesn't have correct title.");
+            Assert.True(result.PartialName == "_BlacksmithArmors", "Model doesn't have correct partial name.");
+        }
+
+        [Fact]
         public async Task DoesAddWeaponItemToUserMethodAddItem()
         {
             var context = ApplicationDbContextInMemoryFactory.InitializeContext();
@@ -25,6 +40,9 @@ namespace BarbariansTests.Services
 
             var itemsSeeder = new CraftableWeaponsSeder();
             await itemsSeeder.SeedCraftableWeapons(context);
+
+            var materialsSeeder = new UsersMaterialSeeder();
+            await materialsSeeder.SeedUserWithMaterials(context, "Id1");
 
             await service.AddWeaponItemToUser("Id1", "Id1");
 
@@ -44,6 +62,9 @@ namespace BarbariansTests.Services
 
             var itemsSeeder = new CraftableArmorsSeeder();
             await itemsSeeder.SeedCraftableArmors(context);
+
+            var materialsSeeder = new UsersMaterialSeeder();
+            await materialsSeeder.SeedUserWithMaterials(context, "Id1");
 
             await service.AddArmorItemToUser("Id1", "Id1");
 
