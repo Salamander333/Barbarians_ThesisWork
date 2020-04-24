@@ -40,7 +40,15 @@
                     <tr style="font-size:x-large">
                         <td>@contestant.Name</td>
                         <td>@contestant.Defence</td>
-                        <td>@contestant.Damage</td>
+                        @if (contestant.Damage == 0)
+                        {
+                            <td>10</td>
+                        }
+                        else
+                        {
+                            <td>@contestant.Damage</td>
+                        }
+
                         <td>@contestant.Health</td>
                         <td>@contestant.Coins</td>
                         <td>

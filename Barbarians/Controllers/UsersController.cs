@@ -77,6 +77,7 @@ namespace Barbarians.Controllers
                 {
                     UserName = model.Username,
                     Email = model.Email,
+                    Health = 100,
                 };
 
                 var result = await _user.CreateAsync(user, model.Password);

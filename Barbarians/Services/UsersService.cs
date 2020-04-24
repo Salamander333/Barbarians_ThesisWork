@@ -19,13 +19,19 @@ namespace Barbarians.Services
         {
             foreach (var material in MaterialList.MaterialObjects)
             {
+                var count = 50;
+                if (material.Name == Materials.Coins)
+                {
+                    count = 1000;
+                }
+
                 var entity = new Material
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = material.Name.ToString(),
                     Type = material.Type,
                     Tier = material.Tier,
-                    Count = 0,
+                    Count = count,
                     UserId = id,
                 };
 

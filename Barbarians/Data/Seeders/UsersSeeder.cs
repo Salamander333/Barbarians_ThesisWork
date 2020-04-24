@@ -74,7 +74,7 @@ namespace Barbarians.Data.Seeders
                     var coins = dbContext.Materials.Where(x => x.Name == "Coins" && x.UserId == foo.Id).FirstOrDefault();
                     coins.Count = new Random().Next(200, 750);
 
-                    for (int j = 0; j < 10; j++)
+                    for (int j = 0; j < 3; j++)
                     {
                         var randomArmor = new Random().Next(1, 18);
                         var armor = (CraftableArmor)dbContext.CraftableArmors.Skip(randomArmor).Take(1).FirstOrDefault();
